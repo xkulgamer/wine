@@ -16,7 +16,8 @@ jobs:
     - name: Install 32 bit development libraries
       run: sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install gcc-multilib g++-multilib libx11-dev:i386 libfreetype6-dev:i386
     - name: configure
-      run: ./configure
+      run: CFLAGS="-mssse3 -O2" ./configure
+ 
     - name: make
       run: make
     - name: make check
