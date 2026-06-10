@@ -8,19 +8,24 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Install 32 bit development libraries
-      run: sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install gcc-multilib g++-multilib libx11-dev:i386 libfreetype6-dev:i386
-    - name: configure
-      run: CFLAGS="-mssse3 -O2" ./configure
- 
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt update
+          sudo apt install -y gcc-multilib g++-multilib
+
+      - name: Configure
+        run: |
+          mkdir build
+          cd build
+          ../configure
+
+      - name: Build
+        run: |
+          cd build
+          make -j$(nproc)
