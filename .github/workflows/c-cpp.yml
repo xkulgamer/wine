@@ -12,12 +12,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install dependencies
+      - name: Install 32-bit development libraries
         run: |
-          sudo dpkg --add-architecture i386
-          sudo apt update
-          sudo apt install -y gcc-multilib g++-multilib
+         sudo dpkg --add-architecture i386
+         sudo apt-get update
+         sudo apt-get install -y \
+         gcc-multilib g++-multilib \
+         flex bison pkg-config \
+         libx11-dev:i386 \
+         libxext-dev:i386 \
+         libxrender-dev:i386 \
+         libxi-dev:i386 \
+         libxrandr-dev:i386 \
+         libxinerama-dev:i386 \
+         libxcursor-dev:i386 \
+         libxcomposite-dev:i386 \
+         libxfixes-dev:i386 \
+         libfreetype6-dev:i386 
 
       - name: Configure
         run: |
